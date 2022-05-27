@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * PopulateDatabase.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+	
+	<!-- User accounts -->
+
+	<bean id="administrator" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="tenant" class="security.UserAccount">
+		<property name="username" value="tenant" />
+		<property name="password" value="91ec1f9324753048c0096d036a694f86" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="TENANT" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="lessor" class="security.UserAccount">
+		<property name="username" value="lessor" />
+		<property name="password" value="91ec1f9324753048c0096d036a694f86" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="LESSOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="super" class="security.UserAccount">
+		<property name="username" value="super" />
+		<property name="password" value="1b3231655cebb7a1f783eddf27d254ca" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+				<bean class="security.Authority">
+					<property name="authority" value="TENANT" />
+				</bean>
+				<bean class="security.Authority">
+					<property name="authority" value="LESSOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="administrator1" class="domain.Administrator">
+		<property name="name" value="JuanDiego" />
+		<property name="surname" value="Borrero" />
+		<property name="email" value="juandiego.borrero688@alu.uhu.es" />
+		<property name="phone" value="666555444" />
+		<!-- <property name="photo" value="image" /> -->
+		<property name="userAccount" ref="administrator" />
+	</bean>
+	
+	<bean id="creditCard1" class="domain.CreditCard">
+		<property name="number" value="1111222233334444" />
+		<property name="expirationYear" value="25" />
+		<property name="expirationMonth" value="01" />
+		<property name="company" value="MasterCard" />
+		<property name="holder" value="Juan Hernandez Robles" />
+		<property name="cvv" value="123" />
+	</bean>
+	<bean id="creditCard2" class="domain.CreditCard">
+		<property name="number" value="4444333322221111" />
+		<property name="expirationYear" value="27" />
+		<property name="expirationMonth" value="02" />
+		<property name="company" value="Visa" />
+		<property name="holder" value="Mariano Rajoy Brey" />
+		<property name="cvv" value="123" />
+	</bean>
+	
+	<bean id="tenant1" class="domain.Tenant">
+		<property name="name" value="Juan" />
+		<property name="surname" value="Hernandez" />
+		<property name="email" value="juan.hernandez@alu.uhu.es" />
+		<property name="phone" value="612345678" />
+		<!-- <property name="photo" value="image" /> -->
+		<property name="creditCard" ref="creditCard1" />
+		<property name="userAccount" ref="tenant" />
+	</bean>
+	
+	<bean id="lessor1" class="domain.Lessor">
+		<property name="name" value="Mariano" />
+		<property name="surname" value="Rajoy" />
+		<property name="email" value="m.rajoy@gmail.es" />
+		<property name="phone" value="666666666" />
+		<!-- <property name="photo" value="image" /> -->
+		<property name="creditCard" ref="creditCard2" />
+		<property name="userAccount" ref="lessor" />
+	</bean>
+	
+	<bean id="property1" class="domain.Property">
+		<property name="name" value="Casa Pepe" />
+		<property name="fee" value="200" />
+		<property name="description" value="Casa espaciosa con piscina" />
+		<property name="address" value="C/ Tana 3" />
+		<property name="country" value="España" />
+		<property name="province" value="Huelva" />
+		<property name="state" value="España" />
+		<property name="city" value="Tana" />
+		<property name="capacity" value="8" />
+		<!-- <property name="photo" value="image" /> -->
+		<property name="lessor" ref="lessor1" />
+	</bean>
+	
+	<bean id="application1" class="domain.Application">
+		<property name="arrival" value="01/01/2023 14:30" />
+		<property name="departure" value="08/01/2023 10:00"/>
+		<property name="smoker" value="true" />
+		<property name="creditCard" ref="creditCard1" />
+		<property name="applicationState" value="ACCEPTED" />
+	</bean>
+	
+	<bean id="propertyAttribute1" class="domain.PropertyAttribute">
+		<property name="name" value="Cuartos" />
+		<property name="addedSuccesfully" value="true" />
+	</bean>
+	
+	<bean id="has1" class="domain.Has">
+		<property name="value" value="3" />
+		<property name="property" ref="property1" />
+		<property name="propertyAttribute" ref="propertyAttribute1" />
+	</bean>
+	
+	
+	
+</beans>
